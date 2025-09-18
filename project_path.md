@@ -2,15 +2,86 @@
 <!-- keep the format -->
 ## setup
 <!-- keep the format -->
-## Setup for user
+## Install some needed tools
+<!-- keep the format -->
+```bash <!-- markdownlint-disable-line code-block-style -->
+# We need the wasm target for rust
+rustup target add wasm32-unknown-unknown
+# The trunk utility for building rust to wasm
+cargo install trunk
+# If we use the nightly toolchain we gain some features from leptos
+rustup toolchain install nightly
+```
+<!-- keep the format -->
+<!-- keep the format -->
+## Show which toolchain is active
+<!-- keep the format -->
+```bash <!-- markdownlint-disable-line code-block-style -->
+rustup show
+# or better
+rustup show |sed -n '/active toolchain/,/^$/p'
+```
+<!-- keep the format -->
+<!-- keep the format -->
+## Setting up a demo project
+<!-- keep the format -->
+```bash <!-- markdownlint-disable-line code-block-style -->
+# cargo init dummy_project
+# cd dummy_project
+# Deviating from the article description
+# german  - Abweichend von der Artikelbeschreibung
+cargo init .
+# used sccache for reduce compile time
+export RUSTC_WRAPPER=sccache
+# cargo add leptos --features=csr,nightly
+cargo add console_error_panic_hook console_log log
+# switch to nightly rust
+rustup override set nightly
+# used sccache for reduce compile time - a compiler wrapper and avoids compilation when possible, storing cached
+export RUSTC_WRAPPER=sccache
+# plain build the project
+cargo build
+```
+<!-- keep the format -->
+<!-- keep the format -->
+## Create the root index html
+<!-- keep the format -->
+```bash <!-- markdownlint-disable-line code-block-style -->
+cat > index.html << 'EOF'
+<!DOCTYPE html>
+<html>
+  <head>
+    <link data-trunk rel="rust" data-keep-debug="true" data-wasm-opt="z"/>
+    <link data-trunk rel="icon" type="image/ico" href="/public/favicon.ico"/>
+  </head>
+<body></body>
+</html>
+EOF
+```
+<!-- keep the format -->
+<!-- keep the format -->
+## Edit/replace the main.rs file
+<!-- keep the format -->
+```bash <!-- markdownlint-disable-line code-block-style -->
+cat > index.html << 'EOF'
+EOF
+```
+<!-- keep the format -->
+<!-- keep the format -->
+## Template Dummy code block
 <!-- keep the format -->
 ```bash <!-- markdownlint-disable-line code-block-style -->
 ```
 <!-- keep the format -->
-<!-- keep the format -->
-## dummy code block
+## Template Dummy generate file
 <!-- keep the format -->
 ```bash <!-- markdownlint-disable-line code-block-style -->
+FILE_NAME="/tmp/here_filename.txt"
+cat > $FILE_NAME << 'EOF'
+echo "Filename" $0
+EOF
+unset FILE_NAME # only the name without dollar sign
+echo $?
 ```
 <!-- keep the format -->
 For further steps, see Project path [![alt text][1]](project_path.md)
