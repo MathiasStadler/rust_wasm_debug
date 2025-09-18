@@ -63,10 +63,64 @@ EOF
 ## Edit/replace the main.rs file
 <!-- keep the format -->
 ```bash <!-- markdownlint-disable-line code-block-style -->
-cat > index.html << 'EOF'
+cat > ./src/main.rs << 'EOF'
+use dummy_project::SimpleCounter;
+use leptos::*;
+
+pub fn main() {
+    _ = console_log::init_with_level(log::Level::Debug);
+    console_error_panic_hook::set_once();
+    mount_to_body(|| {
+        view! {
+            <SimpleCounter
+                initial_value=0
+                step=1
+            />
+        }
+    })
+}
 EOF
 ```
 <!-- keep the format -->
+## Create a lib.rs file
+<!-- keep the format -->
+```bash <!-- markdownlint-disable-line code-block-style -->
+FILE_NAME="./src/lib.rs"
+cat > $FILE_NAME << 'EOF'
+use leptos::*;
+
+/// A simple counter component.
+///
+/// You can use doc comments like this to document your component.
+#[component]
+pub fn SimpleCounter(
+    /// The starting value for the counter
+    initial_value: i32,
+    /// The change that should be applied each time the button is clicked.
+    step: i32,
+) -> impl IntoView {
+    let (value, set_value) = create_signal(initial_value);
+
+    view! {
+        <div>
+            <button on:click=move |_| set_value.set(0)>"Clear"</button>
+            <button on:click=move |_| set_value.update(|value| *value -= step)>"-1"</button>
+            <span>"Value: " {value} "!"</span>
+            <button on:click=move |_| {
+                // Test Panic
+                //panic!("Test Panic");
+                // In order to breakpoint the below, the code needs to be on it's own line
+                set_value.update(|value| *value += step)
+            }
+            >"+1"</button>
+        </div>
+    }
+}
+EOF
+unset FILE_NAME # only the name without dollar sign
+echo $?
+```
+
 <!-- keep the format -->
 ## Template Dummy code block
 <!-- keep the format -->
