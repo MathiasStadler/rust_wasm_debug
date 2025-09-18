@@ -11,7 +11,9 @@ pub fn SimpleCounter(
     step: i32,
 ) -> impl IntoView {
     let (value, set_value) = create_signal(initial_value);
-
+    
+#![feature(adt_const_params)]
+   
     view! {
         <div>
             <button on:click=move |_| set_value.set(0)>"Clear"</button>

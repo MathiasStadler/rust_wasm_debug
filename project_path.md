@@ -30,10 +30,12 @@ rustup show |sed -n '/active toolchain/,/^$/p'
 # cd dummy_project
 # Deviating from the article description
 # german  - Abweichend von der Artikelbeschreibung
+# used sccache for reduce compile time - a compiler wrapper and avoids compilation when possible, storing cached
+export RUSTC_WRAPPER=sccache
 cargo init .
 # used sccache for reduce compile time
 export RUSTC_WRAPPER=sccache
-# cargo add leptos --features=csr,nightly
+cargo add leptos --features=csr,nightly
 cargo add console_error_panic_hook console_log log
 # switch to nightly rust
 rustup override set nightly
@@ -120,11 +122,19 @@ EOF
 unset FILE_NAME # only the name without dollar sign
 echo $?
 ```
+<!-- keep the format -->
+## Create a favicon file
+<!-- keep the format -->
+```bash <!-- markdownlint-disable-line code-block-style -->
+mkdir public && touch public/favicon.ico
+```
+<!-- keep the format -->
 
 <!-- keep the format -->
 ## Template Dummy code block
 <!-- keep the format -->
 ```bash <!-- markdownlint-disable-line code-block-style -->
+# code here
 ```
 <!-- keep the format -->
 ## Template Dummy generate file
